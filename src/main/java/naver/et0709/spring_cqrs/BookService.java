@@ -12,6 +12,9 @@ import java.util.Date;
 public class BookService {
     //CURD 작업을 하기위한 인스턴스 생성
     private final BookRepository bookRepository;
+    //메세지 전송을 하기위한 KafkaProducer 생성
+    private final KafkaProducer kafkaProducer;
+
     //파라미터로 데이터를 전달받아 저장하기
     public void saveBook(BookDTO bookDTO) {
         try {
@@ -30,6 +33,10 @@ public class BookService {
                     .build();
             //데이터 삽입
             bookRepository.save(book);
+            //데이터 삽입이 성공하면 book 객체에서 bid 값을 가져와 bookDTO객체에 저장
+            bookDTO.setBid(book.getBid());
+            //KafkaProducer로 KafKa에 메세지 전송
+            kafkaProducer.sendMessage(bookDTO);
         }
         catch(Exception e){
             System.out.println(e.getMessage());
