@@ -5,6 +5,7 @@ import lombok.Data;
 //Controller와 Service사이에 데이터 전달 클래스
 @Data
 public class BookDTO {
+    private Long bid;
     private String title;
     private String author;
     private String category;
