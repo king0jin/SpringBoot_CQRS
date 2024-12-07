@@ -38,9 +38,9 @@ main/source/application.properties를 삭제하고 application.yaml을 생성하
   + 2개의 데이블이 만들어지는게 하나는 Entity와 직접 연동이 되는 테이블이고  _sep가 붙는 테이블은 id를 자동으로 생성하도록 설정해서 일련번호를 저장하기위한 테이블이다
 
 
- ### 5. Repository 인터페이스 생성 
- 데이터베이스에 실질적인 CURD 작업을 수행하기 위한 인스턴스를 생성하기 위한 Repository 인터페이스이다
- + Interface를 인터페이스로 생성하여 CURD 작업을 수행한다
+### 5. Repository 인터페이스 생성 
+데이터베이스에 실질적인 CURD 작업을 수행하기 위한 인스턴스를 생성하기 위한 Repository 인터페이스이다
++ Interface를 인터페이스로 생성하여 CURD 작업을 수행한다
 
 
 ### 6. Service 클래스 생성
@@ -69,8 +69,34 @@ Controller 클래스와 Service 클래스 사이의 데이터 전달을 위한 D
 ![image](https://github.com/user-attachments/assets/d9012531-b737-42d6-a5fd-33584208ba3b)
 
 
+---
+## Kafka 연결
+Kafka를 연결하여 데이터를 삽입할 때 Topic 전송
 
 
+### 1. Kafka사용을 위한 의존성 추가 - rebuild수행
++ build.gradle - dependencies
+  + **implementation 'org.springframework.kafka:spring-kafka'**
 
 
+### 2. Kafka에 대한 정보 추가
+Kafka사용을 위한 Kafka에 대한 정보를 SpringBoot 프로젝트 설정 파일에 추가
++ application.yaml
+
+
+### 3. Kafka 환경 설정 클래스 생성
++ KafkaConfiguration
+
+
+#### 3-2. DTO클래스 수정
++ bid추가
+
+
+### 4. 메세지 전송 Producer 클래스 생성
++ Topic을 생성한다
++ sendMessage()로 메세지를 전달 받으면 Topic과 함께 메세지를 send()로 메세지를 전송한다
+
+
+### 5. Service 클래스 수정
++ Producer 클래스를 인스턴스를 생성하여 데이터 삽입이 성공하면 Kafka로 메세지와 sendMessage()를 호출한다 
 
